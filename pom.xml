@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" 
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 
+                             http://maven.apache.org/maven-v4_0_0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>org.sonatype.mavenbook.multispring</groupId>
+  <artifactId>simple-parent</artifactId>
+  <version>0.8-SNAPSHOT</version>
+  <packaging>pom</packaging>
+  <name>Multi-Spring Chapter Simple Parent Project</name>
+ 
+  <modules>
+    <module>simple-command</module>
+    <module>simple-model</module>
+    <module>simple-weather</module>
+    <module>simple-persist</module>
+    <module>simple-webapp</module>
+  </modules>
+
+  <build>
+    <pluginManagement>
+    <plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-compiler-plugin</artifactId>
+        <configuration>
+          <source>1.7</source>
+          <target>1.7</target>
+        </configuration>
+      </plugin>
+    </plugins>
+    </pluginManagement>
+
+    <resources>
+      <!-- 先指定 src/main/resources下所有文件及文件夹为资源文件均可被替换 -->
+      <resource>
+        <directory>src/main/resources</directory>
+        <filtering>true</filtering>
+      </resource>
+    </resources>
+  </build>
+
+
+
+  <dependencies>
+    <dependency>
+      <groupId>junit</groupId>
+      <artifactId>junit</artifactId>
+      <version>4.12</version>
+      <scope>test</scope>
+    </dependency>
+  </dependencies>
+
+  <profiles>
+    <profile>
+      <id>publish</id>
+      <activation>
+        <activeByDefault>true</activeByDefault>
+      </activation>
+      <properties>
+        <hibernate.connection.url>jdbc:hsqldb:data/weather;shutdown=true</hibernate.connection.url>
+        <log4j.appender.CONSOLE.Threshold>INFO</log4j.appender.CONSOLE.Threshold>
+      </properties>
+    </profile>
+    <profile>
+      <id>stage</id>
+      <properties>
+        <hibernate.connection.url>jdbc:hsqldb:data/weather;shutdown=true</hibernate.connection.url>
+        <log4j.appender.CONSOLE.Threshold>DEBUG</log4j.appender.CONSOLE.Threshold>
+      </properties>
+    </profile>
+    <!--<profile>-->
+      <!--<id>publish-external</id>-->
+      <!--<distributionManagement>-->
+        <!--<site>-->
+          <!--<id>sonatype-site</id>-->
+          <!--<name>Sonatype Book Examples</name>-->
+          <!--<url>scp://site@svn.sonatype.com/home/site/books/mvnex-book/book-examples/</url>-->
+        <!--</site>-->
+      <!--</distributionManagement>-->
+      <!--<properties>-->
+        <!--<sonatype.site>scp://site@svn.sonatype.com/home/site/books/</sonatype.site>-->
+      <!--</properties>-->
+    <!--</profile>-->
+    <!--<profile>-->
+      <!--<id>stage-external</id>-->
+      <!--<distributionManagement>-->
+        <!--<site>-->
+          <!--<id>sonatype-site</id>-->
+          <!--<name>Sonatype Book Examples</name>-->
+          <!--<url>scp://site@svn.sonatype.com/home/site/books/mvnex-book-stage/book-examples/</url>-->
+        <!--</site>-->
+      <!--</distributionManagement>-->
+    <!--</profile>-->
+  </profiles>
+</project>
